@@ -1,0 +1,3 @@
+# Every change needs the owner's review. The release automation pushes with a
+# deploy key, which the ruleset lists as a bypass actor.
+* @BardiaN
