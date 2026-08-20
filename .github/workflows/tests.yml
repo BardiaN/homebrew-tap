@@ -1,0 +1,25 @@
+name: tests
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  formula:
+    runs-on: macos-latest
+    steps:
+      - uses: Homebrew/actions/setup-homebrew@master
+      - uses: actions/checkout@v4
+        with:
+          path: homebrew-tap
+      - name: link the checkout in as a tap
+        run: |
+          tap_dir="$(brew --repository)/Library/Taps/bardian"
+          mkdir -p "$tap_dir"
+          ln -s "${GITHUB_WORKSPACE}/homebrew-tap" "$tap_dir/homebrew-tap"
+      - run: brew style bardian/tap
+      - run: brew readall bardian/tap

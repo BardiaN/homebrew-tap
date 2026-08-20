@@ -8,7 +8,6 @@ class KronkCli < Formula
   url "https://github.com/BardiaN/kronk-cli/archive/refs/tags/v0.1.0.tar.gz"
   sha256 "0000000000000000000000000000000000000000000000000000000000000000"
   license "Apache-2.0"
-  version "0.1.0"
 
   depends_on "node"
 
@@ -17,7 +16,7 @@ class KronkCli < Formula
     libexec.install Dir["*"]
     (bin/"kronk-cli").write <<~SH
       #!/bin/bash
-      exec "#{Formula["node"].opt_bin}/node" "#{libexec}/src/index.js" "$@"
+      exec "#{formula_opt_bin("node")}/node" "#{libexec}/src/index.js" "$@"
     SH
     chmod 0755, bin/"kronk-cli"
   end
