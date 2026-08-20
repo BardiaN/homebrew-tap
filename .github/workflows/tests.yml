@@ -9,17 +9,27 @@ permissions:
   contents: read
 
 jobs:
-  formula:
-    runs-on: macos-latest
+  test-bot:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: Homebrew/actions/setup-homebrew@master
-      - uses: actions/checkout@v4
-        with:
-          path: homebrew-tap
-      - name: link the checkout in as a tap
-        run: |
-          tap_dir="$(brew --repository)/Library/Taps/bardian"
-          mkdir -p "$tap_dir"
-          ln -s "${GITHUB_WORKSPACE}/homebrew-tap" "$tap_dir/homebrew-tap"
-      - run: brew style bardian/tap
-      - run: brew readall bardian/tap
+      # setup-homebrew checks this repository out as a tap already, so there is
+      # nothing to link by hand.
+      - name: Set up Homebrew
+        id: setup
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - run: brew test-bot --only-cleanup-before
+
+      - run: brew test-bot --only-setup
+
+      # Style and `readall` across every formula in the tap.
+      - run: brew test-bot --only-tap-syntax
+
+      # Building kronk-cli needs a published release tarball; enable this once
+      # v0.1.0 is tagged.
+      # - run: brew test-bot --only-formulae
+      #   if: github.event_name == 'pull_request'
