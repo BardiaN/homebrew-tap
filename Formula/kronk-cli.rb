@@ -5,8 +5,8 @@
 class KronkCli < Formula
   desc "Terminal agent for local models served by Kronk"
   homepage "https://github.com/BardiaN/kronk-cli"
-  url "https://github.com/BardiaN/kronk-cli/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "6271d08f265c1f2e2fbc338144c87e300abfdbadf312b9b5460e4e4a1869fdd0"
+  url "https://github.com/BardiaN/kronk-cli/archive/refs/tags/v0.1.1.tar.gz"
+  sha256 "404846d1cf737e992e2cf4f92bcc734e6f46f2ec452927e84dc6f0058f8f2af1"
   license "Apache-2.0"
 
   depends_on "node"
