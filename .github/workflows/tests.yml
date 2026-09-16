@@ -18,9 +18,15 @@ jobs:
     steps:
       # setup-homebrew checks this repository out as a tap already, so there is
       # nothing to link by hand.
+      #
+      # Pinned by commit, not by a branch. `@master` stopped resolving the day
+      # Homebrew/actions renamed its default branch to `main`, and every push
+      # here failed in "Set up job" before a step ran. `@main` would be the same
+      # bet placed again: a moving ref means whatever is at its tip runs with
+      # this repository's token, and the tap is what `brew install` trusts.
       - name: Set up Homebrew
         id: setup
-        uses: Homebrew/actions/setup-homebrew@master
+        uses: Homebrew/actions/setup-homebrew@1e34f2e2acaa766b7efacb8c26352e6abbb023f9 # 2026.09.13.1
 
       - run: brew test-bot --only-cleanup-before
 
