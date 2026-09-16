@@ -1,0 +1,11 @@
+version: 2
+updates:
+  # Without this, a pin here only moves when someone notices it has rotted —
+  # and what "noticing" looked like was the tap going red on a release push,
+  # months after the action it pins moved on. There is one workflow and one
+  # action in it; the cost of watching them is a pull request now and then.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly }
+    labels: [dependencies, ci]
+    commit-message: { prefix: "ci" }
